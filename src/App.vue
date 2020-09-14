@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link :to="{name: 'main'}" class="t-btn" key="contacts">
+        Контакты
+      </router-link>
     </div>
     <router-view/>
   </div>
