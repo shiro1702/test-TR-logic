@@ -7,7 +7,7 @@ export default {
 				name: 'Ивановский Иван Иванович',
 				info: 'короткая информация 1',
 				favorite: true,
-				fealds: [
+				fields: [
 					{
 						name: 'телефон',
 						value: '+7 999 999 99 99'
@@ -22,14 +22,14 @@ export default {
 				id: 2,
 				name: 'Петровский Пётр Петрович',
 				info: 'короткая информация 2',
-				fealds: []
+				fields: []
 			},
 			{
 				id: 3,
 				name: 'Сидоров Иван Анатольевич',
 				info: 'короткая информация 1',
 				favorite: true,
-				fealds: [
+				fields: [
 					{
 						name: 'телефон',
 						value: '+7 999 999 99 99'
@@ -44,7 +44,7 @@ export default {
 				id: 4,
 				name: 'Степанов Степан Иванович',
 				info: 'короткая информация 1',
-				fealds: [
+				fields: [
 					{
 						name: 'телефон',
 						value: '+7 999 999 99 99'
@@ -59,7 +59,7 @@ export default {
 				id: 5,
 				name: 'Ивановский Станислав Иванович',
 				info: 'короткая информация 1',
-				fealds: [
+				fields: [
 					{
 						name: 'телефон',
 						value: '+7 999 999 99 99'
@@ -75,7 +75,7 @@ export default {
 				name: 'Ивановский Иван Иванович',
 				info: 'короткая информация 1',
 				favorite: true,
-				fealds: [
+				fields: [
 					{
 						name: 'телефон',
 						value: '+7 999 999 99 99'
@@ -147,8 +147,7 @@ export default {
 	mutations: {
 		// создание контакта
 		createItem(state, data){ 
-			let date = new Date().getTime() 
-			state.items.push({...data, id: date})
+			state.items.push(data)
 		},
 		// редактивроание контакта
 		editItem(state, data){
@@ -163,9 +162,21 @@ export default {
 	},
 	actions: {
     // функция надстройка для задания или снятия флага избранного у контакта
-		setFavorite({commit}, item){
-			item.favorite = !item.favorite;
-			commit('editItem', item);
-		}
+		// setFavorite({commit}, item){
+		// 	item.favorite = !item.favorite;
+		// 	commit('editItem', item);
+    // },
+    saveItem({commit}, item){
+      return new Promise((resolve) => {
+        if (item.id ){
+          commit('editItem', item);
+          resolve();
+        } else {
+          let newId = new Date().getTime() 
+          commit('createItem', {...item, id: newId});
+          resolve(newId);
+        }
+      })
+    }
 	}
 };

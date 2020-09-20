@@ -19,7 +19,7 @@
         <button 
           class="contacts__item-favorite" 
           :class="{_active: item.favorite}" 
-          @click.prevent="setFavorite({id: item.id, favorite: item.favorite })" 
+          @click.prevent="editItem({id: item.id, favorite: !item.favorite })" 
           type="button"
         >
           Избранное
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import listTransition from '@/components/listTransition.vue';
 
 export default {
@@ -49,7 +49,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('contacts', ['setFavorite']),
+    ...mapMutations('contacts', ['editItem']),
   },
   components: {
     listTransition
