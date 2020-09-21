@@ -1,5 +1,5 @@
 <template>
-  <div class="contacts">
+  <div class="contacts" >
     <template v-if="!editState && !createState">
       <button class="contacts__btn-edit t-btn" @click="edit(true)" type="button">
         править
@@ -38,18 +38,28 @@
         вперед
       </button>
     </template>
-    <input type="text" v-model.lazy.trim="itemC.name" :readonly="!editState && !createState">
-    <input type="text" v-model.lazy.trim="itemC.info" :readonly="!editState && !createState">
-    <ul class="fields" ref="fields">
+    <input 
+      type="text" 
+      v-model.lazy.trim="itemC.name" 
+      :readonly="!editState && !createState">
+    <input 
+      type="text" 
+      v-model.lazy.trim="itemC.info"
+      :readonly="!editState && !createState">
+    <list-transition tag="ul" class="fields">
       <li 
         v-for="(field, index) in itemC.fields" :key="index"
         class="fields__item"
       >
-        <!-- {{ field.name }} - {{ field.value }} -->
-<!-- @input="updateField({index: index})" -->
-        <input type="text" v-model.lazy.trim="field.name"  :readonly="!editState && !createState">
+        <input 
+          type="text" 
+          v-model.lazy.trim="field.name"
+          :readonly="!editState && !createState">
         -
-        <input type="text" v-model.lazy.trim="field.value" :readonly="!editState && !createState">
+        <input 
+          type="text" 
+          v-model.lazy.trim="field.value" 
+          :readonly="!editState && !createState">
         <button 
           v-show="!(!editState && !createState)"
           class="fields__item-delete"  
@@ -64,10 +74,12 @@
         class="fields__btn-add"  
         @click="addField({})"
         type="button"
+        key="add-btn"
       >
         +
       </button>
-    </ul>
+
+    </list-transition>
   </div>
 </template>
 
@@ -77,6 +89,8 @@ import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 // import store from '@/store'
 
 import { genSetGet } from '@/assets/js/helpers.js'
+import listTransition from '@/components/listTransition.vue';
+
 
 export default {
   name: 'Home',
@@ -85,6 +99,9 @@ export default {
       type: [String, Number],
       default: 'create'
     }
+  },
+  components: {
+    listTransition
   },
   data(){
     return {
@@ -154,8 +171,6 @@ export default {
       }
     }
   },
-  components: {
-  },
   methods: {
     ...mapMutations('contact', ['setItem', 'editItem', 'addField', 'deleteField', 'updateField']),
     ...mapActions('contact', [ 'undo', 'redo', 'clear']),
@@ -221,10 +236,22 @@ export default {
         this.setItem(Object.assign({}, this.itemState));
       }
       this.editState = false;
-    }
+    },
+    crtZ(e){
+      if( e.which === 89 && (e.ctrlKey || e.metaKey) ){
+        this.redo()
+      }
+      else if( e.which === 90 && (e.ctrlKey || e.metaKey) ){
+        this.undo()
+      }
+    },
   },
   created(){
     this.clearChange();
+    document.addEventListener('keydown', this.crtZ);
+  },
+  beforeDestroy(){
+    document.removeEventListener('keydown', this.crtZ);
   }
 }
 </script>
