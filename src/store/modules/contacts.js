@@ -103,10 +103,10 @@ export default {
         })
         // сортировка по имени
         .sort( (item1, item2) => {
-          if (item1.name < item2.name){
+          if (item1.name.toLowerCase() < item2.name.toLowerCase()){
             return -1;
           }
-          if (item1.name > item2.name){
+          if (item1.name.toLowerCase() > item2.name.toLowerCase()){
             return 1;
           }
           return 0
