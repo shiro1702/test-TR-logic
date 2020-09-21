@@ -195,12 +195,14 @@ export default {
     },
     save(){
       // сохранение контакта
-      this.saveItem(Object.assign({}, this.itemC ))
+      console.log('itemC', this.item);
+      this.saveItem(Object.assign({}, this.item ))
         .then(id => {
           // если возрващается id то нужно сменить маршрут на созданный контакт
           if (id) {
             this.$router.push({ name: 'contactId', params: {contactId: id} });
           }
+          this.setItem(this.item);
           // снять режим редактирования
           this.editState = false;
         });

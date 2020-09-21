@@ -56,7 +56,22 @@ export default {
       }
     },
     updateField: (state, item) => {
-      if (item.index) {
+      console.log(item);
+      console.log( [
+        ...state.item.fields.slice(0, item.index),
+      ]);
+      console.log( [
+        { ...state.item.fields.slice(item.index, item.index + 1)[0], ...item }, 
+      ]);
+      console.log( [
+        ...state.item.fields.slice(item.index + 1)
+      ]);
+      console.log( [
+        ...state.item.fields.slice(0, item.index), 
+        { ...state.item.fields.slice(item.index, item.index + 1)[0], ...item }, 
+        ...state.item.fields.slice(item.index + 1)
+      ]);
+      if (item.index != undefined) {
         state.item = { 
           ...state.item, 
           fields: [
@@ -65,6 +80,7 @@ export default {
             ...state.item.fields.slice(item.index + 1)
           ]
         }
+        console.log(state.item);
       }
     },
     deleteField(state, i){

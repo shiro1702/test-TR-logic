@@ -168,6 +168,7 @@ export default {
     // },
     saveItem({commit}, item){
       return new Promise((resolve) => {
+        console.log(item.id);
         if (item.id ){
           commit('editItem', item);
           resolve();
