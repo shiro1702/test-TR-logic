@@ -18,6 +18,9 @@
         <path fill-rule="evenodd" clip-rule="evenodd" d="M17.999 6.99988H5.99902V18.9999C5.99902 20.1039 6.89502 20.9999 8.00002 20.9999H15.999C17.105 20.9999 17.999 20.1039 17.999 18.9999V6.99988ZM14.499 2.9989H9.499L8.5 3.9999H5.999C5.448 3.9999 5 4.4479 5 4.9989V5.9999H19V4.9989C19 4.4479 18.552 3.9999 17.999 3.9999H15.5L14.499 2.9989Z" />
       </symbol>
 
+      <symbol id="left" viewBox="0 0 24 24">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M15.4 7.4L14 6L8 12L14 18L15.4 16.6L10.8 12L15.4 7.4Z"/>
+      </symbol>
       <symbol id="right" viewBox="0 0 24 24">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M8.6001 7.4L10.0001 6L16.0001 12L10.0001 18L8.6001 16.6L13.2001 12L8.6001 7.4Z"/>
       </symbol>

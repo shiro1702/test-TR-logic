@@ -1,65 +1,67 @@
 <template>
   <main class="page-contant" >
     <div class="a-container page-contant__content">
-      <button 
-        class="a-favorite" 
-        :class="{_active: item.favorite}" 
-        @click.prevent="editItem({id: item.id, favorite: !item.favorite })" 
-        type="button"
-      >
-        <svg class="a-favorite__icon svg-icon">
-          <use xlink:href="#star"></use>
-        </svg>
-      </button>
-      <template v-if="!editState && !createState">
-        <button class="contacts__btn-edit a-btn" @click="edit(true)" type="button">
-          <svg class="svg-icon">
-            <use xlink:href="#edit"></use>
-          </svg>
-        </button>
-        <button class="contacts__btn-edit a-btn" @click.prevent="setModal({modalName: 'deleteContact', id: itemC.id, name: itemC.name })" type="button">
-          <svg class="svg-icon">
-            <use xlink:href="#trash"></use>
-          </svg>
-        </button>
-      </template>
-      <template v-else>
-        <button
-          class="contacts__btn-edit a-btn"
-          @click="cancel"
+      <div>
+        <button 
+          class="a-favorite" 
+          :class="{_active: item.favorite}" 
+          @click.prevent="setItem({...item, favorite: !item.favorite })" 
           type="button"
         >
-          отмена
-        </button>
-        <button
-          class="contacts__btn-edit a-btn" 
-          :disabled="!hasChanges"
-          @click="save()"
-          type="button"
-        >
-          сохранить
-        </button>
-        <button
-          class="contacts__btn-edit a-btn"
-          @click="undo"
-          :disabled="!canUndo"
-          type="button"
-        >
-          <svg class="undo svg-icon">
-            <use xlink:href="#right"></use>
+          <svg class="a-favorite__icon svg-icon">
+            <use xlink:href="#star"></use>
           </svg>
         </button>
-        <button
-          class="contacts__btn-edit a-btn" 
-          @click="redo"
-          :disabled="!canRedo"
-          type="button"
-        >
-          <svg class="redo svg-icon">
-            <use xlink:href="#right"></use>
-          </svg>
-        </button>
-      </template>
+        <template v-if="!editState && !createState">
+          <button class="contacts__btn-edit a-btn" @click="edit(true)" type="button">
+            <svg class="svg-icon">
+              <use xlink:href="#edit"></use>
+            </svg>
+          </button>
+          <button class="contacts__btn-edit a-btn" @click.prevent="setModal({modalName: 'deleteContact', id: itemC.id, name: itemC.name })" type="button">
+            <svg class="svg-icon">
+              <use xlink:href="#trash"></use>
+            </svg>
+          </button>
+        </template>
+        <template v-else>
+          <button
+            class="contacts__btn-edit a-btn"
+            @click="cancel"
+            type="button"
+          >
+            отмена
+          </button>
+          <button
+            class="contacts__btn-edit a-btn" 
+            :disabled="!hasChanges"
+            @click="save()"
+            type="button"
+          >
+            сохранить
+          </button>
+          <button
+            class="contacts__btn-edit a-btn"
+            @click="undo"
+            :disabled="!canUndo"
+            type="button"
+          >
+            <svg class="undo svg-icon">
+              <use xlink:href="#left"></use>
+            </svg>
+          </button>
+          <button
+            class="contacts__btn-edit a-btn" 
+            @click="redo"
+            :disabled="!canRedo"
+            type="button"
+          >
+            <svg class="redo svg-icon">
+              <use xlink:href="#right"></use>
+            </svg>
+          </button>
+        </template>
+      </div>
       <input 
         type="text" 
         v-model.lazy.trim="itemC.name" 
@@ -332,6 +334,4 @@ export default {
 
 .undo, .redo
   fill: currentColor
-.undo
-  transform: rotate(180deg)
 </style>
