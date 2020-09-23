@@ -51,9 +51,10 @@
       :readonly="!editState && !createState">
     <list-transition tag="ul" class="fields">
       <li 
-        v-for="(field, index) in itemC.fields" :key="index"
+        v-for="(field, index) in itemC.fields" :key="'li'+field.id"
         class="fields__item"
       >
+        {{field.id}}
         <input 
           type="text" 
           v-model.lazy.trim="field.name"
@@ -137,6 +138,10 @@ export default {
               name: 'fields',
               inArray: [
                 {
+                  name: 'id', 
+                  method: 'updateField'
+                },
+                {
                   name: 'name', 
                   method: 'updateField'
                 },
@@ -161,8 +166,8 @@ export default {
     },
     // наличие изменений
     hasChanges(){
-      console.log(JSON.stringify(this.item))
-      console.log(JSON.stringify(this.startItem))
+      // console.log(JSON.stringify(this.item))
+      // console.log(JSON.stringify(this.startItem))
       return !(JSON.stringify(this.item)===JSON.stringify(this.startItem));
     },
   },
