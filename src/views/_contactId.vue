@@ -1,23 +1,38 @@
 <template>
   <div class="contacts" >
+    <button 
+      class="a-favorite" 
+      :class="{_active: item.favorite}" 
+      @click.prevent="editItem({id: item.id, favorite: !item.favorite })" 
+      type="button"
+    >
+      <svg class="a-favorite__icon svg-icon">
+        <use xlink:href="#star"></use>
+      </svg>
+    </button>
     <template v-if="!editState && !createState">
-      <button class="contacts__btn-edit t-btn" @click="edit(true)" type="button">
-        править
+      <button class="contacts__btn-edit a-btn" @click="edit(true)" type="button">
+        
+        <svg class="svg-icon">
+          <use xlink:href="#edit"></use>
+        </svg>
       </button>
-      <button class="contacts__btn-edit t-btn" @click.prevent="setModal({modalName: 'deleteContact', id: itemC.id, name: itemC.name })" type="button">
-        удалить
+      <button class="contacts__btn-edit a-btn" @click.prevent="setModal({modalName: 'deleteContact', id: itemC.id, name: itemC.name })" type="button">
+        <svg class="svg-icon">
+          <use xlink:href="#trash"></use>
+        </svg>
       </button>
     </template>
     <template v-else>
       <button
-        class="contacts__btn-edit t-btn"
+        class="contacts__btn-edit a-btn"
         @click="cancel"
         type="button"
       >
         отмена
       </button>
       <button
-        class="contacts__btn-edit t-btn" 
+        class="contacts__btn-edit a-btn" 
         :disabled="!hasChanges"
         @click="save()"
         type="button"
@@ -25,20 +40,24 @@
         сохранить
       </button>
       <button
-        class="contacts__btn-edit t-btn"
+        class="contacts__btn-edit a-btn"
         @click="undo"
         :disabled="!canUndo"
         type="button"
       >
-        назад
+        <svg class="undo svg-icon">
+          <use xlink:href="#right"></use>
+        </svg>
       </button>
       <button
-        class="contacts__btn-edit t-btn" 
+        class="contacts__btn-edit a-btn" 
         @click="redo"
         :disabled="!canRedo"
         type="button"
       >
-        вперед
+        <svg class="redo svg-icon">
+          <use xlink:href="#right"></use>
+        </svg>
       </button>
     </template>
     <input 
@@ -54,7 +73,6 @@
         v-for="(field, index) in itemC.fields" :key="'li'+field.id"
         class="fields__item"
       >
-        {{field.id}}
         <input 
           type="text" 
           v-model.lazy.trim="field.name"
@@ -251,3 +269,10 @@ export default {
   }
 }
 </script>
+
+<style lang="sass">
+.undo, .redo
+  fill: currentColor
+.undo
+  transform: rotate(180deg)
+</style>

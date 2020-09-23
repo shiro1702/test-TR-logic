@@ -1,6 +1,14 @@
 <template>
   <main class="index">
-    <button @click="favorite=!favorite" type="button">Избранное</button>
+    <button  
+      class="a-favorite" 
+      :class="{_active: favorite}" 
+      @click="favorite=!favorite" type="button"
+    >
+      <svg class="a-favorite__icon svg-icon">
+        <use xlink:href="#star"></use>
+      </svg>
+    </button>
     <router-link :to="{name:'create'}">Создать</router-link>
     <div class="search">
       <input class="search__input" v-model="q"/>
@@ -17,14 +25,20 @@
       >
         {{ item.name }}
         <button 
-          class="contacts__item-favorite" 
+          class="contacts__item-favorite a-favorite" 
           :class="{_active: item.favorite}" 
           @click.prevent="editItem({id: item.id, favorite: !item.favorite })" 
           type="button"
         >
-          Избранное
+          <svg class="a-favorite__icon svg-icon">
+            <use xlink:href="#star"></use>
+          </svg>
         </button>
-        <button @click.prevent="setModal({modalName: 'deleteContact', id: item.id, name: item.name })" type="button">x</button>
+        <button @click.prevent="setModal({modalName: 'deleteContact', id: item.id, name: item.name })" type="button">
+          <svg class="svg-icon">
+            <use xlink:href="#trash"></use>
+          </svg>
+        </button>
       </router-link>
     </list-transition>
   </main>
