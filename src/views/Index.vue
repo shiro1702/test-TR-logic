@@ -1,46 +1,61 @@
 <template>
   <main class="index">
-    <button  
-      class="a-favorite" 
-      :class="{_active: favorite}" 
-      @click="favorite=!favorite" type="button"
-    >
-      <svg class="a-favorite__icon svg-icon">
-        <use xlink:href="#star"></use>
-      </svg>
-    </button>
-    <router-link :to="{name:'create'}">Создать</router-link>
-    <div class="search">
-      <input class="search__input" v-model="q"/>
-    </div>
-    <list-transition
-      name="list" 
-      class="contacts"
-      tag="div"
-    >
-      <router-link 
-        v-for="item in items" :key="'contact-'+item.id" 
-        :to="{ name:'contactId', params: { contactId: item.id } }"
-        class="contacts__item"
+    <div class="a-container">
+      <!-- <h1 key="contacts">
+        Контакты
+      </h1> -->
+      <button  
+        class="a-favorite" 
+        :class="{_active: favorite}" 
+        @click="favorite=!favorite" 
+        type="button"
       >
-        {{ item.name }}
-        <button 
-          class="contacts__item-favorite a-favorite" 
-          :class="{_active: item.favorite}" 
-          @click.prevent="editItem({id: item.id, favorite: !item.favorite })" 
+        <svg class="a-favorite__icon svg-icon">
+          <use xlink:href="#star"></use>
+        </svg>
+      </button>
+      <router-link :to="{name:'create'}">
+        <button  
+          class="a-btn" 
           type="button"
         >
-          <svg class="a-favorite__icon svg-icon">
-            <use xlink:href="#star"></use>
-          </svg>
-        </button>
-        <button @click.prevent="setModal({modalName: 'deleteContact', id: item.id, name: item.name })" type="button">
           <svg class="svg-icon">
-            <use xlink:href="#trash"></use>
+            <use xlink:href="#add"></use>
           </svg>
         </button>
       </router-link>
-    </list-transition>
+      <div class="search">
+        <input class="search__input" v-model="q"/>
+      </div>
+      <list-transition
+        name="list" 
+        class="contacts"
+        tag="div"
+      >
+        <router-link 
+          v-for="item in items" :key="'contact-'+item.id" 
+          :to="{ name:'contactId', params: { contactId: item.id } }"
+          class="contacts__item"
+        >
+          {{ item.name }}
+          <button 
+            class="contacts__item-favorite a-favorite" 
+            :class="{_active: item.favorite}" 
+            @click.prevent="editItem({id: item.id, favorite: !item.favorite })" 
+            type="button"
+          >
+            <svg class="a-favorite__icon svg-icon">
+              <use xlink:href="#star"></use>
+            </svg>
+          </button>
+          <button @click.prevent="setModal({modalName: 'deleteContact', id: item.id, name: item.name })" type="button">
+            <svg class="svg-icon">
+              <use xlink:href="#trash"></use>
+            </svg>
+          </button>
+        </router-link>
+      </list-transition>
+    </div>
   </main>
 </template>
 
@@ -53,12 +68,7 @@ export default {
   data(){
     return {
       q: '',
-      favorite: false,
-      // deleteContact: {
-      //   id: undefined,
-      //   name: ''
-      // },
-      // modalDel: false
+      favorite: false
     }
   },
   computed: {

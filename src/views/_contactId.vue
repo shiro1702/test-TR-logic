@@ -1,138 +1,143 @@
 <template>
-  <div class="contacts" >
-    <button 
-      class="a-favorite" 
-      :class="{_active: item.favorite}" 
-      @click.prevent="editItem({id: item.id, favorite: !item.favorite })" 
-      type="button"
-    >
-      <svg class="a-favorite__icon svg-icon">
-        <use xlink:href="#star"></use>
-      </svg>
-    </button>
-    <template v-if="!editState && !createState">
-      <button class="contacts__btn-edit a-btn" @click="edit(true)" type="button">
-        
-        <svg class="svg-icon">
-          <use xlink:href="#edit"></use>
-        </svg>
-      </button>
-      <button class="contacts__btn-edit a-btn" @click.prevent="setModal({modalName: 'deleteContact', id: itemC.id, name: itemC.name })" type="button">
-        <svg class="svg-icon">
-          <use xlink:href="#trash"></use>
-        </svg>
-      </button>
-    </template>
-    <template v-else>
-      <button
-        class="contacts__btn-edit a-btn"
-        @click="cancel"
+  <main class="page-contant" >
+    <div class="a-container page-contant__content">
+      <button 
+        class="a-favorite" 
+        :class="{_active: item.favorite}" 
+        @click.prevent="editItem({id: item.id, favorite: !item.favorite })" 
         type="button"
       >
-        отмена
-      </button>
-      <button
-        class="contacts__btn-edit a-btn" 
-        :disabled="!hasChanges"
-        @click="save()"
-        type="button"
-      >
-        сохранить
-      </button>
-      <button
-        class="contacts__btn-edit a-btn"
-        @click="undo"
-        :disabled="!canUndo"
-        type="button"
-      >
-        <svg class="undo svg-icon">
-          <use xlink:href="#right"></use>
+        <svg class="a-favorite__icon svg-icon">
+          <use xlink:href="#star"></use>
         </svg>
       </button>
-      <button
-        class="contacts__btn-edit a-btn" 
-        @click="redo"
-        :disabled="!canRedo"
-        type="button"
-      >
-        <svg class="redo svg-icon">
-          <use xlink:href="#right"></use>
-        </svg>
-      </button>
-    </template>
-    <input 
-      type="text" 
-      v-model.lazy.trim="itemC.name" 
-      :readonly="!editState && !createState">
-    <input 
-      type="text" 
-      v-model.lazy.trim="itemC.info"
-      :readonly="!editState && !createState">
-    <list-transition tag="ul" class="fields">
-      <li 
-        v-for="(field, index) in itemC.fields" :key="'li'+field.id"
-        class="fields__item"
-      >
-        <input 
-          type="text" 
-          v-model.lazy.trim="field.name"
-          :readonly="!editState && !createState">
-        -
-        <input 
-          type="text" 
-          v-model.lazy.trim="field.value" 
-          :readonly="!editState && !createState">
+      <template v-if="!editState && !createState">
+        <button class="contacts__btn-edit a-btn" @click="edit(true)" type="button">
+          <svg class="svg-icon">
+            <use xlink:href="#edit"></use>
+          </svg>
+        </button>
+        <button class="contacts__btn-edit a-btn" @click.prevent="setModal({modalName: 'deleteContact', id: itemC.id, name: itemC.name })" type="button">
+          <svg class="svg-icon">
+            <use xlink:href="#trash"></use>
+          </svg>
+        </button>
+      </template>
+      <template v-else>
+        <button
+          class="contacts__btn-edit a-btn"
+          @click="cancel"
+          type="button"
+        >
+          отмена
+        </button>
+        <button
+          class="contacts__btn-edit a-btn" 
+          :disabled="!hasChanges"
+          @click="save()"
+          type="button"
+        >
+          сохранить
+        </button>
+        <button
+          class="contacts__btn-edit a-btn"
+          @click="undo"
+          :disabled="!canUndo"
+          type="button"
+        >
+          <svg class="undo svg-icon">
+            <use xlink:href="#right"></use>
+          </svg>
+        </button>
+        <button
+          class="contacts__btn-edit a-btn" 
+          @click="redo"
+          :disabled="!canRedo"
+          type="button"
+        >
+          <svg class="redo svg-icon">
+            <use xlink:href="#right"></use>
+          </svg>
+        </button>
+      </template>
+      <input 
+        type="text" 
+        v-model.lazy.trim="itemC.name" 
+        :readonly="!editState && !createState">
+      <input 
+        type="text" 
+        v-model.lazy.trim="itemC.info"
+        :readonly="!editState && !createState">
+      <list-transition tag="ul" class="fields">
+        <li 
+          v-for="(field, index) in itemC.fields" :key="'li'+field.id"
+          class="fields__item"
+        >
+          <input 
+            type="text" 
+            v-model.lazy.trim="field.name"
+            :readonly="!editState && !createState">
+          -
+          <input 
+            type="text" 
+            v-model.lazy.trim="field.value" 
+            :readonly="!editState && !createState">
+          <button 
+            v-show="!(!editState && !createState)"
+            class="fields__item-delete"  
+            @click="deleteFieldIndex = index"
+            type="button"
+          >
+            <svg class="svg-icon">
+              <use xlink:href="#trash"></use>
+            </svg>
+          </button>
+        </li>
         <button 
           v-show="!(!editState && !createState)"
-          class="fields__item-delete"  
-          @click="deleteFieldIndex = index"
+          class="fields__btn-add"  
+          @click="addField({})"
           type="button"
+          key="add-btn"
         >
-          x
+          <svg class="svg-icon">
+            <use xlink:href="#add"></use>
+          </svg>
         </button>
-      </li>
-      <button 
-        v-show="!(!editState && !createState)"
-        class="fields__btn-add"  
-        @click="addField({})"
-        type="button"
-        key="add-btn"
-      >
-        +
-      </button>
 
-    </list-transition>
-    <modal :open.sync="cancelModal">
-      <h1>Изменения будут потеряны. вы уверены?</h1>  
-        <button 
-          @click="clearChange(), cancelModal = false"
-          type="button"
-        >
-          да
-        </button>
-        <button 
-          @click="cancelModal = false"
-          type="button"
-        >
-          нет
-        </button>
-    </modal>
-    <modal :open.sync="deleteFieldModal">
-      <h1>Поле будет удалено, вы уверены?</h1>  
-        <button 
-          @click="deleteField(deleteFieldIndex), deleteFieldModal = false"
-          type="button"
-        >
-          да
-        </button>
-        <button 
-          @click="deleteFieldModal = false"
-          type="button"
-        >
-          нет
-        </button>
-    </modal>
-  </div>
+      </list-transition>
+      <modal :open.sync="cancelModal">
+        <h1>Изменения будут потеряны. вы уверены?</h1>  
+          <button 
+            @click="clearChange(), cancelModal = false"
+            type="button"
+          >
+            да
+          </button>
+          <button 
+            @click="cancelModal = false"
+            type="button"
+          >
+            нет
+          </button>
+      </modal>
+      <modal :open.sync="deleteFieldModal">
+        <h1>Поле будет удалено, вы уверены?</h1>  
+          <button 
+            @click="deleteField(deleteFieldIndex), deleteFieldModal = false"
+            type="button"
+          >
+            да
+          </button>
+          <button 
+            @click="deleteFieldModal = false"
+            type="button"
+          >
+            нет
+          </button>
+      </modal>
+    </div>
+  </main>
 </template>
 
 <script>
@@ -320,6 +325,11 @@ export default {
 </script>
 
 <style lang="sass">
+.page-contant
+  &__content
+    display: flex
+    flex-direction: column
+
 .undo, .redo
   fill: currentColor
 .undo

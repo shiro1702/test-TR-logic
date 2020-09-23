@@ -10,18 +10,21 @@ const routes = [
   {
     path: '/',
     name: 'main',
-    component: Index
+    component: Index,
+    meta: { depth: 1 }
   },
   {
     path: '/create',
     name: 'create',
     component: ContactId,
-    props: { contactId: 'create' } 
+    props: { contactId: 'create' },
+    meta: { depth: 2 }
   },
   {
     path: '/:contactId',
     name: 'contactId',
     component: ContactId,
+    meta: { depth: 3 },
     props: true
   }
 ]

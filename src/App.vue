@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link :to="{name: 'main'}" class="t-btn" key="contacts">
-        Контакты
-      </router-link>
+    <cmp-header/>
+    <div class="main-content">
+      <transition :name="pageAnimation">
+        <router-view class="a-page"/>
+      </transition>
     </div>
-    <router-view/>
     <wrapper/>
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <symbol id="star" viewBox="0 0 24 24">
@@ -21,15 +21,40 @@
       <symbol id="right" viewBox="0 0 24 24">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M8.6001 7.4L10.0001 6L16.0001 12L10.0001 18L8.6001 16.6L13.2001 12L8.6001 7.4Z"/>
       </symbol>
+      <symbol id="add" viewBox="0 0 24 24">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M11 5V11H5V13H11V19H13V13H19V11H13V5H11Z"/>
+      </symbol>
     </svg>
   </div>
 </template>
 
 <script>
 import wrapper from '@/components/modals/wrapper.vue';
+import header from '@/components/header.vue';
+
 export default {
   components: {
-    wrapper
+    wrapper,
+    'cmp-header': header
+  },
+  data(){
+    return {
+      q: '',
+      favorite: false,
+      pageAnimation: ''
+    }
+  },
+  // computed: {
+  //   pageAnimation(){
+  //     return 'page-forward'
+  //     // return 'page-back'
+  //   }
+  // },
+  watch: {
+    $route(to, from) {
+      this.pageName = to.name
+      this.pageAnimation = to.meta.depth > from.meta.depth ? 'page-forward' : 'page-back'
+    }
   }
 }
 </script>
@@ -49,11 +74,61 @@ body
     color: #2c3e50
     &.router-link-exact-active
       color: #42b983
+.a-container
+  max-width: 720px
+  width: calc(100% - 32px)
+  margin: 0 auto
 
+// анимации пояаления
 .fade-enter-active, .fade-leave-active
   transition: opacity .5s
 .fade-enter, .fade-leave-to
   opacity: 0
+
+.a-page
+  position: relative
+  flex-grow: 1
+  width: 100vw
+  overflow: hidden
+
+// анимации переходов страниц
+.page-forward-enter-active
+  transition: transform .4s, opacity .4s
+  position: absolute
+  top: 0
+  left: 0%
+  transform: translateX(0%) 
+
+.page-forward-enter
+  transform: translateX(100%) 
+  opacity: 0
+
+.page-forward-leave-active
+  transition: opacity .4s
+
+.page-forward-leave-to
+  opacity: 0
+
+.page-back-enter-active
+  transition: opacity .4s
+  
+.page-back-enter
+  opacity: 0.5
+
+.page-back-leave-active
+  transition: transform .4s, opacity .4s
+  position: absolute
+  top: 0
+  left: 0%
+  transform: translateX(0%) 
+
+.page-back-leave-to
+  transform: translateX(100%) 
+  opacity: 0.5
+
+.main-content
+  position: relative
+
 
 .svg-icon
   display: inline-block
