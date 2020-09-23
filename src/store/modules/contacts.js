@@ -9,10 +9,12 @@ export default {
 				favorite: true,
 				fields: [
 					{
+            id: 1,
 						name: 'телефон',
 						value: '+7 999 999 99 99'
 					},
 					{
+            id: 2,
 						name: 'email',
 						value: 'test@test.te'
 					}
@@ -31,10 +33,12 @@ export default {
 				favorite: true,
 				fields: [
 					{
+            id: 3,
 						name: 'телефон',
 						value: '+7 999 999 99 99'
 					},
 					{
+            id: 4,
 						name: 'email',
 						value: 'test@test.te'
 					}
@@ -46,10 +50,12 @@ export default {
 				info: 'короткая информация 1',
 				fields: [
 					{
+            id: 5,
 						name: 'телефон',
 						value: '+7 999 999 99 99'
 					},
 					{
+            id: 6,
 						name: 'email',
 						value: 'test@test.te'
 					}
@@ -61,10 +67,12 @@ export default {
 				info: 'короткая информация 1',
 				fields: [
 					{
+            id: 7,
 						name: 'телефон',
 						value: '+7 999 999 99 99'
 					},
 					{
+            id: 8,
 						name: 'email',
 						value: 'test@test.te'
 					}
@@ -77,10 +85,12 @@ export default {
 				favorite: true,
 				fields: [
 					{
+            id: 9,
 						name: 'телефон',
 						value: '+7 999 999 99 99'
 					},
 					{
+            id: 10,
 						name: 'email',
 						value: 'test@test.te'
 					}

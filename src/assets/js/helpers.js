@@ -6,7 +6,9 @@ export const genSetGet = function( tree, that = this, thatGlobal = this) {
     tree.children.forEach((item) => {
       let obj = genSetGet({...item, index: tree.index}, that[tree.name], thatGlobal);
       let value = Object.getOwnPropertyDescriptor(obj, item.name);
-      Object.defineProperty(final, item.name, value);
+      if (value) {
+        Object.defineProperty(final, item.name, value);
+      }
     })
   } else {
     if (tree.inArray) {
@@ -19,7 +21,7 @@ export const genSetGet = function( tree, that = this, thatGlobal = this) {
         })
       }
     } else {
-      if (tree.name && typeof(that[tree.name]) == 'string' ) {
+      if (tree.name && (typeof(that[tree.name]) == 'string' || typeof(that[tree.name]) == 'number' ) ) {
         Object.defineProperty(final, tree.name, {
           get() {
             return that[tree.name] || '';

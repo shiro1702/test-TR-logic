@@ -12,7 +12,7 @@
         </button>
         <button 
             class="a-btn"
-            @click.prevent="modalDel = false" 
+            @click.prevent="$emit('close')" 
             type="button"
         >
             нет

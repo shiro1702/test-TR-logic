@@ -47,6 +47,7 @@ export default {
         fields: [ 
           ...state.item.fields, 
           {
+            id: new Date().getTime(), 
             name: '',
             value: '',
             ...data

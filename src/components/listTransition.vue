@@ -15,6 +15,7 @@
 import Velocity from 'velocity-animate';
 
 export default {
+  props: [],
   methods: {
     beforeEnter(el) {
       el.style.opacity = 0
