@@ -175,11 +175,6 @@ export default {
   },
   computed: {
     ...mapState('contact', ['item', 'startItem', 'canUndo', 'canRedo']),
-
-    // ...mapState({
-    //   undoButtonEnabled: "canUndo",
-    //   redoButtonEnabled: "canRedo",
-    // }),
     ...mapGetters('contacts', ['getItemById']),
     
     // текущий контакт
@@ -216,9 +211,6 @@ export default {
       }
       return undefined
     },
-    // itemFields(){
-    //   return this.genSetGet('item', 'editItem', ['name', 'info']);
-    // },
     // режим создания нового контакта
     createState(){
       return this.contactId == 'create';
@@ -297,7 +289,6 @@ export default {
     },
     // сброс изменений
     clearChange(){
-      // this.clear();
       if (this.createState) {
         // если это создание контакта
         this.setItem({});

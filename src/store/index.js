@@ -30,11 +30,6 @@ export default new Vuex.Store({
         },
       ],
     }),
-
-    // undoRedo({
-    //   // NB: Include 'ignoreMutations' at root level, and do not provide the list of 'paths'.
-    //   ignoreMutations: ["addShadow", "removeShadow"],
-    // }),
   ],
   
   mutations: {

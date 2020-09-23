@@ -1,9 +1,6 @@
 <template>
   <main class="index">
     <div class="a-container">
-      <!-- <h1 key="contacts">
-        Контакты
-      </h1> -->
       <button  
         class="a-favorite" 
         :class="{_active: favorite}" 
@@ -76,30 +73,10 @@ export default {
     items(){
       return this.filterItems({q: this.q, favorite: this.favorite})
     },
-    // modalDel:{
-    //   get(){
-    //     if (this.deleteContact.id == undefined){
-    //       return false;
-    //     } else {
-    //       return true;
-    //     }
-    //   },
-    //   set(val){
-    //     if (!val){
-    //       this.deleteContact =  {
-    //         id: undefined,
-    //         name: ''
-    //       };
-    //     }
-    //   }
-    // }
   },
   methods: {
     ...mapMutations('contacts', ['editItem']),
     ...mapMutations('modal', ['setModal']),
-    // setModal(data){
-    //   this.deleteContact = data;
-    // }
   },
   components: {
     listTransition
