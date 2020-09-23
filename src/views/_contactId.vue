@@ -85,7 +85,7 @@
         <button 
           v-show="!(!editState && !createState)"
           class="fields__item-delete"  
-          @click="deleteField(index)"
+          @click="deleteFieldIndex = index"
           type="button"
         >
           x
@@ -102,6 +102,36 @@
       </button>
 
     </list-transition>
+    <modal :open.sync="cancelModal">
+      <h1>Изменения будут потеряны. вы уверены?</h1>  
+        <button 
+          @click="clearChange(), cancelModal = false"
+          type="button"
+        >
+          да
+        </button>
+        <button 
+          @click="cancelModal = false"
+          type="button"
+        >
+          нет
+        </button>
+    </modal>
+    <modal :open.sync="deleteFieldModal">
+      <h1>Поле будет удалено, вы уверены?</h1>  
+        <button 
+          @click="deleteField(deleteFieldIndex), deleteFieldModal = false"
+          type="button"
+        >
+          да
+        </button>
+        <button 
+          @click="deleteFieldModal = false"
+          type="button"
+        >
+          нет
+        </button>
+    </modal>
   </div>
 </template>
 
@@ -112,6 +142,7 @@ import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 import { genSetGet } from '@/assets/js/helpers.js'
 import listTransition from '@/components/listTransition.vue';
+import modal from '@/components/modal.vue';
 
 
 export default {
@@ -123,13 +154,16 @@ export default {
     }
   },
   components: {
-    listTransition
+    listTransition,
+    modal
   },
   data(){
     return {
       // режим редактирования
       editState: false,
-      // item: {},
+      // модалки
+      cancelModal: false,
+      deleteFieldIndex: undefined,
     }
   },
   computed: {
@@ -188,6 +222,21 @@ export default {
       // console.log(JSON.stringify(this.startItem))
       return !(JSON.stringify(this.item)===JSON.stringify(this.startItem));
     },
+
+    deleteFieldModal: {
+      get(){
+        if (this.deleteFieldIndex != undefined) {
+          return true
+        } else {
+          return false
+        }
+      },
+      set(val){
+        if (!val) {
+          this.deleteFieldIndex = undefined
+        }
+      }
+    },
   },
   watch: {
     editState(newVal){
@@ -224,9 +273,9 @@ export default {
       // если есть изменения 
       if (this.hasChanges) {
         // вывести предупреждение о том что они будут потеряны
-        
+        this.cancelModal = true;
         // отменить их
-        this.clearChange()
+        
       } else {
         // если изменений нет
         // если это создание контакта
