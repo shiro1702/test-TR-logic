@@ -26,7 +26,7 @@ export default new Vuex.Store({
         {
           namespace: 'contact',
           // Any mutations that you want the undo/redo mechanism to ignore
-          ignoreMutations: ['setItem', 'addShadow', 'removeShadow'],
+          ignoreMutations: ['setItem', 'editItemShadow'],
         },
       ],
     }),
