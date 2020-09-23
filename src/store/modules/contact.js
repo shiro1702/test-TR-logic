@@ -26,7 +26,6 @@ export default {
     },
 		// создание контакта
 		setItem(state, data){
-      console.log(data);
 			state.item = { ...{
         name: '',
         info: '',
@@ -56,21 +55,6 @@ export default {
       }
     },
     updateField: (state, item) => {
-      console.log(item);
-      console.log( [
-        ...state.item.fields.slice(0, item.index),
-      ]);
-      console.log( [
-        { ...state.item.fields.slice(item.index, item.index + 1)[0], ...item }, 
-      ]);
-      console.log( [
-        ...state.item.fields.slice(item.index + 1)
-      ]);
-      console.log( [
-        ...state.item.fields.slice(0, item.index), 
-        { ...state.item.fields.slice(item.index, item.index + 1)[0], ...item }, 
-        ...state.item.fields.slice(item.index + 1)
-      ]);
       if (item.index != undefined) {
         state.item = { 
           ...state.item, 
@@ -80,7 +64,6 @@ export default {
             ...state.item.fields.slice(item.index + 1)
           ]
         }
-        console.log(state.item);
       }
     },
     deleteField(state, i){

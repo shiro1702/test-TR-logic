@@ -24,7 +24,7 @@
         >
           Избранное
         </button>
-        <button @click.prevent="" type="button">x</button>
+        <button @click.prevent="setModal({modalName: 'deleteContact', id: item.id, name: item.name })" type="button">x</button>
       </router-link>
     </list-transition>
   </main>
@@ -39,17 +39,43 @@ export default {
   data(){
     return {
       q: '',
-      favorite: false
+      favorite: false,
+      // deleteContact: {
+      //   id: undefined,
+      //   name: ''
+      // },
+      // modalDel: false
     }
   },
   computed: {
     ...mapGetters('contacts', ['filterItems']),
     items(){
       return this.filterItems({q: this.q, favorite: this.favorite})
-    }
+    },
+    // modalDel:{
+    //   get(){
+    //     if (this.deleteContact.id == undefined){
+    //       return false;
+    //     } else {
+    //       return true;
+    //     }
+    //   },
+    //   set(val){
+    //     if (!val){
+    //       this.deleteContact =  {
+    //         id: undefined,
+    //         name: ''
+    //       };
+    //     }
+    //   }
+    // }
   },
   methods: {
     ...mapMutations('contacts', ['editItem']),
+    ...mapMutations('modal', ['setModal']),
+    // setModal(data){
+    //   this.deleteContact = data;
+    // }
   },
   components: {
     listTransition

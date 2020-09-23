@@ -4,6 +4,9 @@
       <button class="contacts__btn-edit t-btn" @click="edit(true)" type="button">
         править
       </button>
+      <button class="contacts__btn-edit t-btn" @click.prevent="setModal({modalName: 'deleteContact', id: itemC.id, name: itemC.name })" type="button">
+        удалить
+      </button>
     </template>
     <template v-else>
       <button
@@ -111,7 +114,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('contact', ['item', 'canUndo', 'canRedo']),
+    ...mapState('contact', ['item', 'startItem', 'canUndo', 'canRedo']),
 
     // ...mapState({
     //   undoButtonEnabled: "canUndo",
@@ -125,30 +128,29 @@ export default {
     },
     itemC(){
       if (this.item){
-        console.log('genSetGet');
+        let item = this.genSetGet({
+          name: 'item',
+          children: [
+            {name: 'name', method: 'editItem'}, 
+            {name: 'info', method: 'editItem'},
+            {
+              name: 'fields',
+              inArray: [
+                {
+                  name: 'name', 
+                  method: 'updateField'
+                },
+                {
+                  name: 'value', 
+                  method: 'updateField'
+                }
+              ]
+            }
+          ]
+        });
+        return item
       }
-
-      let item = this.genSetGet({
-        name: 'item',
-        children: [
-          {name: 'name', method: 'editItem'}, 
-          {name: 'info', method: 'editItem'},
-          {
-            name: 'fields',
-            inArray: [
-              {
-                name: 'name', 
-                method: 'updateField'
-              },
-              {
-                name: 'value', 
-                method: 'updateField'
-              }
-            ]
-          }
-        ]
-      });
-      return item
+      return undefined
     },
     // itemFields(){
     //   return this.genSetGet('item', 'editItem', ['name', 'info']);
@@ -159,9 +161,9 @@ export default {
     },
     // наличие изменений
     hasChanges(){
-      // console.log(JSON.stringify(this.item))
-      // console.log(JSON.stringify(this.itemState))
-      return !(JSON.stringify(this.item)===JSON.stringify(this.itemState));
+      console.log(JSON.stringify(this.item))
+      console.log(JSON.stringify(this.startItem))
+      return !(JSON.stringify(this.item)===JSON.stringify(this.startItem));
     },
   },
   watch: {
@@ -174,19 +176,7 @@ export default {
   methods: {
     ...mapMutations('contact', ['setItem', 'editItem', 'addField', 'deleteField', 'updateField']),
     ...mapActions('contact', [ 'undo', 'redo', 'clear']),
-    // ...mapMutations('contact', ['setItem', 'editItem', 'addField', 'deleteField', 'undoRedo']),
-
-    // ...mapMutations('undoRedo', ['undo', 'redo']),
-    // undo(){
-    //   this.undoRedo.undo()
-    // },
-    // redo(){
-      
-    //   this.undoRedo.redo()
-    // },
-
-    
-    // ...mapMutations('undoRedo',['undo', 'redo']),
+    ...mapMutations('modal', ['setModal']),
     ...mapActions('contacts', ['saveItem']),
     genSetGet,
     // изменить режим редактирования
@@ -195,7 +185,6 @@ export default {
     },
     save(){
       // сохранение контакта
-      console.log('itemC', this.item);
       this.saveItem(Object.assign({}, this.item ))
         .then(id => {
           // если возрващается id то нужно сменить маршрут на созданный контакт

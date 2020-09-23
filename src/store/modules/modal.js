@@ -1,34 +1,34 @@
-export const state = () => ({
-    active: false,
-    modalContent: ''
-})
-
-export const mutations = {
-    set(state, [key, val]){
-        // console.log(key);
-        // console.log(val);
-        state[key] = val;
-    },
-}
-
-export const actions = {
-    openModal({commit}) {
-        console.log('openModal');
-        commit('set', ['active', true])
-    },
-    setActiveModal({commit}, data) {
-        commit('set', ['active', data])
-    },
-    setModalContent({commit}, data){
-        console.log(data);
-        
-        commit('set', ['active', true])
-        commit('set', ['modalContent', data])
-    }
-}
-
 export default {
-    state,
-    mutations,
-    actions,
+	namespaced: true,
+    state: {
+        modalContent: [],
+    },
+    getters: {
+        openState(state){
+            if (state.modalContent.length > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        active(state){
+            return state.modalContent[state.modalContent.length - 1]
+        }
+    },
+    mutations: {
+        setModal(state, name){
+            // console.log(key);
+            // console.log(val);
+            // state[key] = val;
+            state.modalContent.push(name)
+        },
+        closeModal(state){
+            state.modalContent.splice(- 1, 1)
+        }
+    },
+    actions: {
+        // openModal({commit}, name) {
+        //     commit('setModal', name)
+        // },
+    },
 }

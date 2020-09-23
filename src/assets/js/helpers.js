@@ -6,8 +6,6 @@ export const genSetGet = function( tree, that = this, thatGlobal = this) {
     tree.children.forEach((item) => {
       let obj = genSetGet({...item, index: tree.index}, that[tree.name], thatGlobal);
       let value = Object.getOwnPropertyDescriptor(obj, item.name);
-      console.log(obj);
-      console.log(item.name);
       Object.defineProperty(final, item.name, value);
     })
   } else {

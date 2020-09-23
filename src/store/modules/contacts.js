@@ -178,6 +178,13 @@ export default {
           resolve(newId);
         }
       })
-    }
+    },
+		// удаление контакта
+		deleteItem({commit}, id){
+      return new Promise((resolve) => {
+        commit('deleteItem', id);
+        resolve();
+      })
+		}
 	}
 };
