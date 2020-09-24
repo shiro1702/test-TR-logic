@@ -1,4 +1,7 @@
 module.exports = {
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/test-TR-logic/'
+    : '/',
   css: {
     loaderOptions: {
       // передача настроек в sass-loader
