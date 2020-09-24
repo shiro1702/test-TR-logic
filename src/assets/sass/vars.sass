@@ -1,8 +1,22 @@
-$black: #c1b9b9
+$black: #040404
+$white: #ffffff
 $blue: #00BCD4
 $grey: #9E9E9E
+$grey-light: #efefef
 $orange: #FFC107
 
 $cartBG: #ffffff
 
 $primary: $blue
+
+$font-fam: 'Roboto', Helvetica, Arial, sans-serif
+
+@mixin placeholder 
+    &::-webkit-input-placeholder 
+        @content
+    &:-moz-placeholder           
+        @content
+    &::-moz-placeholder          
+        @content
+    &:-ms-input-placeholder      
+        @content  

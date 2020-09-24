@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>
+        <h1 class="title-h2 mb_m">
             Удалить контакт <span>{{ info.name }}</span>?
         </h1>
         <button 
@@ -11,7 +11,7 @@
             да
         </button>
         <button 
-            class="a-btn"
+            class="a-btn _outline"
             @click.prevent="$emit('close')" 
             type="button"
         >

@@ -1,7 +1,6 @@
 <template>
 	<transition-group
 		:css="false"
-		v-bind="$attrs"
     name="staggered-fade"
 		@before-enter="beforeEnter"
 		@enter="enter"
@@ -15,7 +14,15 @@
 import Velocity from 'velocity-animate';
 
 export default {
-  props: [],
+  props: {
+    itemHeight: {
+      name: '',
+      default: '1.6em'
+    }
+  },
+  created() {
+    console.log(this.itemHeight);
+  },
   methods: {
     beforeEnter(el) {
       el.style.opacity = 0
@@ -26,7 +33,7 @@ export default {
       setTimeout( () => {
         Velocity(
           el,
-          { opacity: 1, height: '1.6em' },
+          { opacity: 1, height: this.itemHeight },
           { complete: done }
         )
       }, delay)
