@@ -17,18 +17,10 @@ export default {
     },
     mutations: {
         setModal(state, name){
-            // console.log(key);
-            // console.log(val);
-            // state[key] = val;
             state.modalContent.push(name)
         },
         closeModal(state){
             state.modalContent.splice(- 1, 1)
         }
-    },
-    actions: {
-        // openModal({commit}, name) {
-        //     commit('setModal', name)
-        // },
     },
 }

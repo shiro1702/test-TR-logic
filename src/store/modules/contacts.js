@@ -77,11 +77,7 @@ export default {
 		}
 	},
 	actions: {
-		// функция надстройка для задания или снятия флага избранного у контакта
-		// setFavorite({commit}, item){
-		// 	item.favorite = !item.favorite;
-		// 	commit('editItem', item);
-		// },
+		// сохранение или редактирование контакта смотря есть ли id
 		saveItem({commit}, item){
 			return new Promise((resolve) => {
 				// console.log(item.id);

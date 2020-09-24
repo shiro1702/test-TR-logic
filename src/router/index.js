@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Index from '../views/Index.vue'
-// import Create from '../views/Create.vue'
 import ContactId from '../views/_contactId.vue'
 
 Vue.use(VueRouter)

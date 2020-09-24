@@ -1,6 +1,5 @@
 <template>
   <main class="page-contant" >
-
     <div class="a-page__header_top">
       <transition name="fade" mode="out-in">
         <template v-if="!editState && !createState">

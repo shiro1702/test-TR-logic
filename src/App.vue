@@ -49,12 +49,6 @@ export default {
       pageAnimation: ''
     }
   },
-  // computed: {
-  //   pageAnimation(){
-  //     return 'page-forward'
-  //     // return 'page-back'
-  //   }
-  // },
   watch: {
     $route(to, from) {
       this.pageName = to.name
@@ -77,7 +71,6 @@ body
   font-family: $font-fam
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
-  // text-align: center
   color: rgba($black, .78)
   background: rgba($black, .12)
 
