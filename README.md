@@ -2,7 +2,7 @@
 
 ## Ссылка на выполненое задание
 
-https://shiro1702.github.io/test-TR-logic/
+https://shiro1702.github.io/test-TR-logic/dist/
 
 ## Текст тестового задания
 
