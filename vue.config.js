@@ -1,6 +1,6 @@
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production'
-    ? '/test-TR-logic/'
+    ? '/test-TR-logic/dist/'
     : '/',
   css: {
     loaderOptions: {
